@@ -25,7 +25,7 @@ local script_vers = 3
 local script_vers_text = "1.11"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
-local script_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/helper.lua"
+local script_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/helper.lua?raw=true"
 local script_path = thisScript().path
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end -- когда самп запущен (единоразовая проверка) / цикл с условием
