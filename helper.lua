@@ -21,8 +21,8 @@ local fake_rep_pod_red = "{FF6347}[Подсказка] "
 local main_window_state = imgui.ImBool(false)
 local text_buffer = imgui.ImBuffer(256)
 update_state = false
-local script_vers = 5
-local script_vers_text = "1.1"
+local script_vers = 3
+local script_vers_text = "1.11"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
 local script_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/helper.lua"
@@ -42,7 +42,7 @@ function main()
 		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 			updateIni = inicfg.load(nil, update_path)
 			if tonumber(updateIni.info.vers) > script_vers then
-				sampAddChatMessage ("Есть обновление. Версия: " ..updateIni.info.vers, -1)
+				sampAddChatMessage ("Есть обновление. Версия: " ..updateIni.info.vers_text, -1)
 				update_state = true
 			end
 			os.remove(update_path)
