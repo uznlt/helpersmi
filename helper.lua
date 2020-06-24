@@ -21,7 +21,7 @@ local fake_rep_pod_red = "{FF6347}[Подсказка] "
 local main_window_state = imgui.ImBool(false)
 local text_buffer = imgui.ImBuffer(256)
 update_state = false
-local script_vers = 3
+local script_vers = 5
 local script_vers_text = "1.1"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
@@ -38,7 +38,7 @@ function main()
 	_, id = sampGetPlayerIdByCharHandle(PLAYER_PED)
 	nick = sampGetPlayerNickname(id)
 	imgui.Process = false
-	downloadUrlToFile(update_url,update_path,function(id,status)
+	downloadUrlToFile(update_url,update_path,function(id, status)
 		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 			updateIni = inicfg.load(nil, update_path)
 			if tonumber(updateIni.info.vers) > script_vers then
@@ -48,14 +48,15 @@ function main()
 			os.remove(update_path)
 		end
 	end)
+
 	while true do -- бесконечная проверка (пока самп активен)
 		wait (0)
+
 	if update_state then
-		downloadUrlToFile(update_url,update_path,function(id,status)
+		downloadUrlToFile(script_url,script_path,function(id,status)
 			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				sampAddChatMessage("Скрипт успешно обновлен. ",-1)
 				thisScript():reload()
-				update_state = false
 			end
 		end)
 		break
