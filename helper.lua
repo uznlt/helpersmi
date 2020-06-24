@@ -55,6 +55,7 @@ function main()
 			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				sampAddChatMessage("Скрипт успешно обновлен. ",-1)
 				thisScript():reload()
+				update_state = false
 			end
 		end)
 		break
