@@ -9,7 +9,7 @@ local encoding = require 'encoding'
 			u8 = encoding.UTF8
 local directIni = "moonloader\\cfg.ini"
 local dlstatus = require ('moonloader').download_status
-local tag = "{b8860b}[DH] {}"
+local tag = "{b8860b}[DH] "
 local main_color = 0xAFAFAFAA
 local main_color_text = "{5A90CE}"
 local color_important = 0x8b0000AA
@@ -22,7 +22,7 @@ local main_window_state = imgui.ImBool(false)
 local text_buffer = imgui.ImBuffer(256)
 update_state = false
 update_spawn = false
-local script_vers = 2
+local script_vers = 3
 local script_vers_text = "1.2"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
@@ -118,14 +118,14 @@ function sampev.onSendSpawn()
 			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				updateIni = inicfg.load(nil, update_path)
 				if tonumber(updateIni.info.vers) > script_vers then
-					sampAddChatMessage (tag.. "[Внимание!] Вышло новое обновление: " ..updateIni.info.vers_text, color_important)
+					sampAddChatMessage (tag.. "[Внимание!] Вышло новое обновление: " ..updateIni.info.vers_text, -1)
 					update_state = true
 				end
 				os.remove(update_path)
 			end
 		end)
 	else
-		sampAddChatMessage(tag.. "[Внимание!] Скрипту не удалось проверить наличие обновлений (#ERR:AZSP). Обратитесь к разработчику скрипта", color_important)
+		sampAddChatMessage(tag.. "[Внимание!] Скрипту не удалось проверить наличие обновлений (#ERR:AZSP). Обратитесь к разработчику скрипта", -1)
 	end
 	end
 
