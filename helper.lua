@@ -21,11 +21,11 @@ local fake_rep_pod_red = "{FF6347}[Подсказка] "
 local main_window_state = imgui.ImBool(false)
 local text_buffer = imgui.ImBuffer(256)
 update_state = false
-local script_vers = 1
-local script_vers_text = "1.00"
+local script_vers = 2
+local script_vers_text = "1.05"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
-local script_url = ""
+local script_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/helper.lua"
 local script_path = thisScript().path
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end -- когда самп запущен (единоразовая проверка) / цикл с условием
@@ -54,11 +54,9 @@ function main()
 			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				sampAddChatMessage("Скрипт успешно обновлен. ",-1)
 				thisScript():reload()
-
 			end
 		end)
 		break
-		end
 			if main_window_state.v == false then -- close imgui
 			imgui.Process = false
 		end
