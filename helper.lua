@@ -21,8 +21,8 @@ local fake_rep_pod_red = "{FF6347}[Подсказка] "
 local main_window_state = imgui.ImBool(false)
 local text_buffer = imgui.ImBuffer(256)
 update_state = false
-local script_vers = 2
-local script_vers_text = "1.05"
+local script_vers = 3
+local script_vers_text = "1.1"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
 local script_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/helper.lua"
@@ -50,6 +50,7 @@ function main()
 	end)
 	while true do -- бесконечная проверка (пока самп активен)
 		wait (0)
+	if update_state then
 		downloadUrlToFile(update_url,update_path,function(id,status)
 			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				sampAddChatMessage("Скрипт успешно обновлен. ",-1)
@@ -57,6 +58,7 @@ function main()
 			end
 		end)
 		break
+	end
 			if main_window_state.v == false then -- close imgui
 			imgui.Process = false
 		end
