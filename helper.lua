@@ -30,15 +30,7 @@ local script_path = thisScript().path
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end -- когда самп запущен (единоразовая проверка) / цикл с условием
 	while not isSampAvailable() do wait (100) end
-	sampAddChatMessage (tag .. "Скрипт успешно загружен. Версия скрипта: " ..script_vers_text ,  main_color)
-	sampRegisterChatCommand("frep", cmd_frep)
-	sampRegisterChatCommand("nick", cmd_nick)
-	sampRegisterChatCommand("addcheck", cmd_addcheck)
-	sampRegisterChatCommand("update1", cmd_update1)
-	_, id = sampGetPlayerIdByCharHandle(PLAYER_PED)
-	nick = sampGetPlayerNickname(id)
-	imgui.Process = false
-	downloadUrlToFile(update_url,update_path,function(id, status)
+	downloadUrlToFile(update_url, update_path, function(id, status)
 		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 			updateIni = inicfg.load(nil, update_path)
 			if tonumber(updateIni.info.vers) > script_vers then
@@ -48,6 +40,15 @@ function main()
 			os.remove(update_path)
 		end
 	end)
+	sampAddChatMessage (tag .. "Скрипт успешно загружен. Версия скрипта: " ..script_vers_text ,  main_color)
+	sampRegisterChatCommand("frep", cmd_frep)
+	sampRegisterChatCommand("nick", cmd_nick)
+	sampRegisterChatCommand("addcheck", cmd_addcheck)
+	sampRegisterChatCommand("update1", cmd_update1)
+	_, id = sampGetPlayerIdByCharHandle(PLAYER_PED)
+	nick = sampGetPlayerNickname(id)
+	imgui.Process = false
+
 
 	while true do -- бесконечная проверка (пока самп активен)
 		wait (0)
@@ -105,7 +106,7 @@ function cmd_nick (arg)
 end
 	--sampAddChatMessage(tag .. "Ваш ник {FFFFFF}".. nick ..", ".. main_color_text .. "ваш ИД: {FFFFFF}".. id, main_color)
 function cmd_update1(arg)
-	sampShowDialog(1000,"Автообновление", "Обновление", "Закрыть",_,0)
+	sampShowDialog(1000,"Автообновление", "Обновление {FFFFAA} v2.0", "Закрыть",_,0)
 end
 
 function sampev.onPlayerJoin(ID)
