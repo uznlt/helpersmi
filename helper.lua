@@ -1,6 +1,5 @@
 script_name('Helper for Dvijenec family')
 script_author('uznlt')
-script_version("0.0.1")
 require "lib.moonloader"
 local sampev = require "lib.samp.events"
 local inicfg = require 'inicfg'
@@ -10,9 +9,10 @@ local encoding = require 'encoding'
 			u8 = encoding.UTF8
 local directIni = "moonloader\\cfg.ini"
 local dlstatus = require ('moonloader').download_status
-local tag = "[DH] "
+local tag = "{b8860b}[DH] "
 local main_color = 0xAFAFAFAA
 local main_color_text = "{5A90CE}"
+local color_important = 0x8b0000
 local color_smi = 0x33FF33AA
 local white_color = 0xFFFFFF
 local white_color_text = "{FFFFFF}"
@@ -32,17 +32,6 @@ local script_path = thisScript().path
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end -- когда самп запущен (единоразовая проверка) / цикл с условием
 	while not isSampAvailable() do wait (100) end
-
-	downloadUrlToFile(update_url, update_path, function(id, status)
-		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
-			updateIni = inicfg.load(nil, update_path)
-			if tonumber(updateIni.info.vers) > script_vers then
-				sampAddChatMessage ("Есть обновление. Версия: " ..updateIni.info.vers_text, -1)
-				update_state = true
-			end
-			os.remove(update_path)
-		end
-	end)
 	sampAddChatMessage (tag .. "Скрипт успешно загружен. Версия скрипта: " ..script_vers_text ,  main_color)
 	sampRegisterChatCommand("frep", cmd_frep)
 	sampRegisterChatCommand("nick", cmd_nick)
@@ -60,6 +49,7 @@ function main()
 		downloadUrlToFile(script_url, script_path, function(id, status)
 			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				sampAddChatMessage("Скрипт успешно обновлен.",-1)
+				sampShowDialog(1000,"Автообновление", "Обновление {FFFFAA} v1.2\n {FFFFFF}Разработчик продолжает познавать основы LUA-кода. В коде полно бесполезной хрени.\n - Код увеличился на ~100 строк\n- Была добавлена система автообновления скрипта\n{FFFFAA}В будущей v1.3(возможно):\n{FFFFFF} - Система черного списка\n - Чекер админов по команде\n", "Закрыть",_,0)
 				thisScript():reload()
 			end
 		end)
@@ -109,7 +99,6 @@ function cmd_nick (arg)
 end
 	--sampAddChatMessage(tag .. "Ваш ник {FFFFFF}".. nick ..", ".. main_color_text .. "ваш ИД: {FFFFFF}".. id, main_color)
 function cmd_update1(arg)
-	sampShowDialog(1000,"Автообновление", "Обновление {FFFFAA} v2.0", "Закрыть",_,0)
 end
 
 function sampev.onPlayerJoin(ID)
@@ -124,10 +113,20 @@ function sampev.onServerMessage(color, text)
 	end
 end
 function sampev.onSendSpawn()
-	if update_spawn = true
-		sampAddChatMessage("+", -1)
+	if update_spawn == true then
+		downloadUrlToFile(update_url, update_path, function(id, status)
+			if status == dlstatus.STATUS_ENDDOWNLOADDATA then
+				updateIni = inicfg.load(nil, update_path)
+				if tonumber(updateIni.info.vers) > script_vers then
+					sampAddChatMessage (tag.. "{8b000}[Внимание!] Вышло новое обновление: " ..updateIni.info.vers_text, -1)
+					update_state = true
+				end
+				os.remove(update_path)
+			end
+		end)
 	else
-		sampAddChatMessage("-", -1)
+		sampAddChatMessage(tag.. "{8b000}[Внимание!] Скрипту не удалось проверить наличие обновлений (#ERR:AZSP). Обратитесь к разработчику скрипта", -1)
+	end
 	end
 
 function imgui.OnDrawFrame()
