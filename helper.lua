@@ -21,8 +21,9 @@ local fake_rep_pod_red = "{FF6347}[Подсказка] "
 local main_window_state = imgui.ImBool(false)
 local text_buffer = imgui.ImBuffer(256)
 update_state = false
-local script_vers = 2
-local script_vers_text = "1.111"
+update_spawn = false
+local script_vers = 3
+local script_vers_text = "1.2"
 local update_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/update.ini"
 local update_path = getWorkingDirectory() .. "/update.ini"
 local script_url = "https://raw.githubusercontent.com/uznlt/helpersmi/master/helper.lua?raw=true"
@@ -118,7 +119,16 @@ function sampev.onPlayerJoin(ID)
 end
 
 function sampev.onServerMessage(color, text)
+	if string.find(text, 'Добро пожаловать на Arizona Role Play!', 1, true) then
+		update_spawn = true
+	end
 end
+function sampev.onSendSpawn()
+	if update_spawn = true
+		sampAddChatMessage("+", -1)
+	else
+		sampAddChatMessage("-", -1)
+	end
 
 function imgui.OnDrawFrame()
 	imgui.Begin(u8" ",main_window_state)
